@@ -233,7 +233,7 @@ try:
     port = split_url.port
     
     if type_ip:
-        netloc = f"{hostname}:{port}"
+        netloc = f"{hostname}:{port}" if port else hostname
         domain = ""
         domain_suffix = ""
     elif not private_ip:
@@ -245,7 +245,7 @@ try:
         netloc = f"{parsed_fqdn}:{port}" if port else parsed_fqdn
         apex_domain = f"{domain}.{domain_suffix}"
     else:
-        netloc = f"{hostname}:{port}"
+        netloc = f"{hostname}:{port}" if port else hostname
         domain = ""
         domain_suffix = ""
 
