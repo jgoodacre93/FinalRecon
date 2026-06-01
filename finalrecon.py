@@ -230,8 +230,10 @@ try:
 
     private_ip = ipaddress.ip_address(ip).is_private
 
+    port = split_url.port
+    
     if type_ip:
-        netloc = hostname
+        netloc = f"{hostname}:{port}"
         domain = ""
         domain_suffix = ""
     elif not private_ip:
@@ -239,10 +241,11 @@ try:
         parsed_url = extractor.extract_urllib(split_url)
         domain = parsed_url.domain
         domain_suffix = parsed_url.suffix
-        netloc = parsed_url.fqdn if parsed_url.fqdn else hostname
+        parsed_fqdn = parsed_url.fqdn if parsed_url.fqdn else hostname
+        netloc = f"{parsed_fqdn}:{port}" if port else parsed_fqdn
         apex_domain = f"{domain}.{domain_suffix}"
     else:
-        netloc = hostname
+        netloc = f"{hostname}:{port}"
         domain = ""
         domain_suffix = ""
 
